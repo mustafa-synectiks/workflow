@@ -136,7 +136,7 @@ const ProjectLayout = () => {
                     <Row>
                         <Col span={6}>
                             <Card className='my-5 p-14'>
-                                <Link href='/main/projects/addProject' className="flex flex-row justify-around items-center bg-gray-200 p-2 w-50">
+                                <Link href='/main/projects/addNewProject' className="flex flex-row justify-around items-center bg-gray-200 p-2 w-50">
                                     <PlusSquareFilled style={{ fontSize: '24px' }} /> <Title level={4}>Project</Title>
                                 </Link>
                             </Card>
