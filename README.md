@@ -34,3 +34,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+Dashboard
+1-https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/org_projects_overview
+organisation projects details overview
+2-https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/project_usecase_overview
+Get the number of completed and incomplete use cases of a project between dates
+3-https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/projects_usecase_overview
+Get the number of completed and incomplete use cases of all project between dates
+4-https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/resouce_task_status
+Get the number of completed, inprogress and pending tasks of a resource in between dates
+5-https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/resources_task_status
+Get the number of completed, inprogress and pending tasks of all resources in between dates
+6-https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/projects_overview
+Get the overview of projects
+7-https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview
+Get the overview of project manager for a project

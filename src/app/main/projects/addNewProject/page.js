@@ -150,6 +150,8 @@
 //     );
 // }
 import Link from "next/link";
+import NavLink from "@/app/nav-link";
+import { Button } from "antd";
 export default function ProjectForm() {
     async function onSubmit(event) {
         event.preventDefault();
@@ -295,13 +297,12 @@ export default function ProjectForm() {
                         />
                     </div>
                 </form>
-                <button
+                <Button
                     onSubmit=""
                     className="ml-[90%] m-10 px-1 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm w-16 h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
                 >
-                    <Link href="/main/projects/resourcePool"></Link>
-                    Next
-                </button>
+                    <Link href="/main/projects/resourcePool">Next</Link>
+                </Button>
             </section>
         </>
     );

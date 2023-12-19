@@ -144,7 +144,8 @@ export default function Home() {
     setIsResourcPoolmodelOpen(false);
   };
   return (
-    <div className="main flex flex-col bg-white w-[1218px] rounded-lg  ">
+    <>
+    <div className="main flex flex-col bg-white w-screen rounded-lg  ">
       <h2 className="ml-4 mt-5 text-black font-segoe-ui text-2xl font-semibold leading-24">Resource Pool</h2>
 
       <div className="flex mt-8">
@@ -250,5 +251,6 @@ export default function Home() {
 
 
     </div>
+    </>
   )
 }

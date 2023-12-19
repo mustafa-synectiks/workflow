@@ -1,60 +1,87 @@
-import { React, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Card, Col, Row, Typography, Tooltip, Button, Progress, Radio } from 'antd';
-import { AntDesignOutlined, UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, IssuesCloseOutlined, ClockCircleOutlined, StopOutlined  } from '@ant-design/icons';
+import axios from 'axios';
 const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
 
 const DashCards = () => {
   const [size, setSize] = useState('large');
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/org_projects_overview');
+        setData(result.data);
+      } catch (error) {
+        // handle error
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <>
+
         <Row gutter={16} className='gap-6 mt-4 w-full' >
-
-          <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+          <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', padding:'0px'}}>
             <Card className='w-full'
-              bordered={false}>
-              <Title level={4}>Total Projects </Title>
-              <Title level={2}>10</Title>
-              <Title level={5}>progress 12%</Title>
-              <Progress type="line" percent={44} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
-              <Paragraph>Total Task 120</Paragraph>
+              bordered={false}
+              style={{
+                boxShadow: 0
+              }}>
+                <div className="flex items-center justify-between">
+              <Title level={4}>Total Projects </Title> <CheckCircleOutlined style={{ color: '#1890FF' }} />
+              </div>
+            <Title level={2}>{data.total_projects}</Title>
+            <Title level={5}>Progress {data.percentage_completed}%</Title>
+            <Progress type="line" percent={data.percentage_completed} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
+              <Paragraph>Total Task {data.total_tasks}</Paragraph>
             </Card>
           </Col>
 
-          <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', padding: '0px' }}>
             <Card className='w-full'
               bordered={false}>
-              <Title level={4}>Completed Projects </Title>
-              <Title level={2}>04</Title>
-            <Progress type="line" percent={88} strokeWidth={16} strokeLinecap='square' strokeColor="#52C41A" trailColor='#F6EEFF' />
-              <Paragraph>Completed Before 05 Days</Paragraph>
+            <div className="flex items-center justify-between">
+              <Title level={4}>Completed Projects </Title> <IssuesCloseOutlined style={{ color:'#52C41A'}}/>
+            </div>
+            <Title level={2}>{data.completed}</Title>
+            <Progress type="line" percent={`${Math.round((data.completed / data.total_projects) * 100)}`} strokeWidth={16} strokeLinecap='square' strokeColor="#52C41A" trailColor='#F6EEFF' />
+            <Paragraph className='my-9'>Completed Before 05 Days</Paragraph>
             </Card>
           </Col>
 
-          <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', padding: '0px' }}>
             <Card className='w-full'
               bordered={false}>
-              <Title level={4}>Inprogress Projects </Title>
-              <Title level={2}>05</Title>
-              <Progress type="line" percent={44} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
-              <Paragraph>View Details</Paragraph>
+            <div className="flex items-center justify-between">
+              <Title level={4}>Inprogress Projects </Title> <ClockCircleOutlined style={{ color: '#FAAD14' }} />
+            </div>
+              <Title level={2}>{data.in_progress}</Title>
+            <Progress type="line" percent={`${Math.round((data.in_progress / data.total_projects) * 100)}`} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
+              <Paragraph className='my-9'>View Details</Paragraph>
             </Card>
           </Col>
 
-          <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', padding: '0px' }}>
             <Card className='w-full'
               bordered={false}>
-              <Title level={4}>Unassign Projects </Title>
-              <Title level={2}>01</Title>
-            <Progress type="line" percent={30} strokeWidth={16} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' />
-              <Paragraph>view Details</Paragraph>
+            <div className="flex items-center justify-between">
+              <Title level={4}>Unassign Projects </Title> <StopOutlined style={{ color: '#FF4D4F' }} />
+            </div>
+            <Title level={2}>{data.unassigned}</Title>
+              {/* <Progress type="line" percent={30} strokeWidth={16} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' /> */}
+            <Progress type="line" percent={`${Math.round((data.unassigned / data.total_projects)*100)}`} strokeWidth={16} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' />
+              <Paragraph className='my-9'>view Details</Paragraph>
             </Card>
           </Col>
-
 
         </Row>
+
     </>
   )
 };
 export default DashCards;
-

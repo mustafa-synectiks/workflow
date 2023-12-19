@@ -1,9 +1,31 @@
-import { React, useState } from 'react';
-import {  Card, Col, Row, Typography, Button, Progress, Radio } from 'antd';
-const { Title, Paragraph, Text } = Typography; 
+import React, { useEffect, useState } from 'react';
+import { Card, Col, Row, Typography, Button, Progress, Radio } from 'antd';
+import axios from 'axios';
+const { Title, Paragraph, Text } = Typography;
+
+const getData = async () => {
+    try {
+        const response = await axios.get('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/projects_overview');
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+};
 
 const ProjectsList = () => {
+
     const [size, setSize] = useState('large');
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getData();
+            setData(result);
+        };
+        fetchData();
+    }, []);
+
     return (
         <>
 
@@ -21,19 +43,25 @@ const ProjectsList = () => {
 
                 </Row>
                 <Row gutter={16} className='gap-6 mt-4' >
-                    <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
-                        <Card className='w-full flex justify-center'
-                            bordered={false}
-                        >
-                            <Title level={3}>Procurement</Title>
-                            <Button className='bg-orange-300'>In Progress</Button>
-                            <Title level={5}>Total Usecase - 30 </Title>
-                            <Paragraph>Due Date 12/09/2023</Paragraph>
-                            <Progress type="circle" percent={44} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
-                            <Title level={4} className='mt-2 mx-auto'>Task Completed</Title>
-                        </Card>
-                    </Col>
-                    <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+                    {data.map((item, index) => (
+                        <Col span={6} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+                            <Card className='w-full flex justify-center'
+                                bordered={false}
+                                style={{
+                                    boxShadow: 'none',
+                                }}
+                            >
+                                <Title level={3} className='capitalize'>{item.project_name}</Title>
+                                <Button className='bg-orange-300'>{item.status}</Button>
+                                <Title level={5}>Total Usecase {item.total_usecases} </Title>
+                                <Paragraph>Due Date {item.due_date}</Paragraph>
+                                <Progress type="circle" percent={item.completed_tasks_percentage} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
+                                <Title level={4} className='mt-2 mx-auto'>{item.completed_usecases}  Task Completed</Title>
+                            </Card>
+                        </Col>
+                    ))}
+
+                    {/* <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
                         <Card className='w-full flex justify-center'
                             bordered={false}
                         >
@@ -68,7 +96,7 @@ const ProjectsList = () => {
                             <Progress type="circle" percent={85} strokeWidth={16} strokeLinecap='square' trailColor='#F6EEFF' strokeColor="#4CCA72" />
                             <Title level={4} className='mt-2 mx-auto'>Task Completed</Title>
                         </Card>
-                    </Col>
+                    </Col> */}
 
                 </Row>
             </div>
