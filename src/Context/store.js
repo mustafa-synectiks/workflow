@@ -1,10 +1,9 @@
-// import { configureStore } from '@reduxjs/toolkit';
-// import projectReducer from './slices/projectSlice';
-
-// const store = configureStore({
-//     reducer: {
-//         projects: projectReducer,
-//     },
-// });
-
-// export default store;
+const { configureStore } = require("@reduxjs/toolkit");
+import usersReducers from './slice'
+// import todoReducer from './todoSlice'
+export const store =configureStore({
+    reducer:{
+        usersData:usersReducers,
+        
+    }
+})

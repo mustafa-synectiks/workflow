@@ -51,12 +51,11 @@ export default function ProjectAddedResources() {
     return (
         <>
             <div className="flex flex-row ">
-                <section className="">
-                    <div className="text-black font-sans text-lg  not-italic font-semibold leading-7 bg-white w-[87vw] flex justify-between items-center  px-4 py-5 flex-shrink-0 m-2  ">
-                        Added New Project
+                    <div className="text-black font-sans text-lg  not-italic font-semibold leading-7 bg-white flex justify-between items-center  px-4 py-5 flex-shrink-0 m-2  ">
+                        Added New Projectd
                     </div>
 
-                    <section className="h-auto w-[99%] flex flex-col items-start justify-center flex-shrink-0 self-stretch rounded-sm bg-white  gap-1   m-2 px-4 py-2 ">
+                    <section className="flex flex-col items-start justify-center flex-shrink-0 self-stretch rounded-sm bg-white  gap-1   m-2 px-4 py-2 ">
                         {/* Added Resources- Profile Section */}
                         <div className=" bg-white w-[80%]  h-auto shadow-sm border-r-slate-900 flex-shrink-0 rounded-lg p-5 gap-12 ">
                             <div className=" flex flex-row justify-between items-center gap-9 py-3 mb-5">
@@ -292,7 +291,6 @@ export default function ProjectAddedResources() {
                             {/* UI Designer */}
                         </div>
                     </section>
-                </section>
             </div>
         </>
     );

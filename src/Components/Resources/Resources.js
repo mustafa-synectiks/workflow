@@ -1,11 +1,30 @@
-import { React, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Card, Col, Row, Typography, Tooltip, Button, Divider, Flex, Radio } from 'antd';
-import { AntDesignOutlined, UserOutlined,} from '@ant-design/icons';
+import { AntDesignOutlined, UserOutlined, } from '@ant-design/icons';
+import axios from 'axios';
+
 const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
-
+const getData = async () => {
+    try {
+        const response = await axios.get('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview');
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+};
 const Resources = () => {
-    const [size, setSize] = useState('large'); // default is 'middle'
+    const [size, setSize] = useState('large');
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getData();
+            setData(result);
+        };
+        fetchData();
+    }, []);
     return (
         <>
             <div style={{ background: '#FFF', padding: '25px' }}>
@@ -21,284 +40,80 @@ const Resources = () => {
                 </Row>
                 <Row gutter={16} className='gap-6 mt-6'>
 
-                    <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
-                        <Card className='w-full flex justify-center'
-                            bordered={false}
-
-                        > <Title level={3}>Procurement</Title>
-                            <Meta
-                                avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-                                title="Angela Moss"
-                                description="Project Manager"
-                            />
-                            <Title level={5}>Current Task - Document</Title>
-                            <Paragraph>Created Date 12/09/2023</Paragraph>
-                            <Paragraph>Due Date 12/09/2023</Paragraph>
-                            <Paragraph>Total Task- 10</Paragraph>
-
-                            <Avatar.Group
-                                maxCount={4}
-                                size="large"
-                                maxStyle={{
-                                    color: '#f56a00',
-                                    backgroundColor: '#fde3cf',
+                    {data.map((item, index) => (
+                        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+                            <Card className='w-full flex justify-center'
+                                bordered={false}
+                                style={{
+                                    boxShadow: 'none'
                                 }}
-                            >
-                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
+
+                            > <Title level={3}>{item.project_name}</Title>
+                                <Meta
+                                    avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
+                                    title={item.manager_name}
+                                    description="Project Manager"
+                                />
+                                <Title level={5}>Current Task <span className=' ml-2'>{item.current_task}</span></Title>
+                                <Paragraph>Created Date {item.due_date}12/09/2023</Paragraph>
+                                <Paragraph>Due Date 12/09/2023</Paragraph>
+                                <Paragraph>Total Task <strong>{item.total_tasks}</strong></Paragraph>
+                                <Avatar.Group
+                                    maxCount={4}
+                                    size="large"
+                                    maxStyle={{
+                                        color: '#f56a00',
+                                        backgroundColor: '#fde3cf',
                                     }}
                                 >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Tooltip title="Ant User" placement="top">
+                                    <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
                                     <Avatar
                                         style={{
-                                            backgroundColor: '#87d068',
+                                            backgroundColor: '#f56a00',
                                         }}
-                                        icon={<UserOutlined />}
-                                    />
-                                </Tooltip>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#1677ff',
-                                    }}
-                                    icon={<AntDesignOutlined />}
-                                />
-                            </Avatar.Group>
-
-                        </Card>
-                    </Col>
-                    <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
-                        <Card className='w-full flex justify-center'
-                            bordered={false}
-                        > <Title level={3}>HRMS</Title>
-                            <Meta
-                                avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-                                title="Angela Moss"
-                                description="Project Manager"
-                            />
-                            <Title level={5}>Current Task - Document</Title>
-                            <Paragraph>Created Date 12/09/2023</Paragraph>
-                            <Paragraph>Due Date 12/09/2023</Paragraph>
-                            <Paragraph>Total Task- 10</Paragraph>
-
-                            <Avatar.Group
-                                maxCount={4}
-                                size="large"
-                                maxStyle={{
-                                    color: '#f56a00',
-                                    backgroundColor: '#fde3cf',
-                                }}
-                            >
-                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Tooltip title="Ant User" placement="top">
+                                    >
+                                        K
+                                    </Avatar>
                                     <Avatar
                                         style={{
-                                            backgroundColor: '#87d068',
+                                            backgroundColor: '#f56a00',
                                         }}
-                                        icon={<UserOutlined />}
-                                    />
-                                </Tooltip>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#1677ff',
-                                    }}
-                                    icon={<AntDesignOutlined />}
-                                />
-                            </Avatar.Group>
-
-                        </Card>
-                    </Col>
-                    <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
-                        <Card className='w-full flex justify-center'
-                            bordered={false}
-                        > <Title level={3}>App Kube</Title>
-                            <Meta
-                                avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-                                title="Angela Moss"
-                                description="Project Manager"
-                            />
-                            <Title level={5}>Current Task - Document</Title>
-                            <Paragraph>Created Date 12/09/2023</Paragraph>
-                            <Paragraph>Due Date 12/09/2023</Paragraph>
-                            <Paragraph>Total Task- 10</Paragraph>
-
-                            <Avatar.Group
-                                maxCount={4}
-                                size="large"
-                                maxStyle={{
-                                    color: '#f56a00',
-                                    backgroundColor: '#fde3cf',
-                                }}
-                            >
-                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Tooltip title="Ant User" placement="top">
+                                    >
+                                        K
+                                    </Avatar>
                                     <Avatar
                                         style={{
-                                            backgroundColor: '#87d068',
+                                            backgroundColor: '#f56a00',
                                         }}
-                                        icon={<UserOutlined />}
-                                    />
-                                </Tooltip>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#1677ff',
-                                    }}
-                                    icon={<AntDesignOutlined />}
-                                />
-                            </Avatar.Group>
-
-                        </Card>
-                    </Col>
-                    <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
-                        <Card className='w-full flex justify-center'
-                            bordered={false}
-                        >
-                            <Title level={3}>Xformation</Title>
-                            <Meta
-                                avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-                                title="Angela Moss"
-                                description="Project Manager"
-                            />
-                            <Title level={5}>Current Task - Document</Title>
-                            <Paragraph>Created Date 12/09/2023</Paragraph>
-                            <Paragraph>Due Date 12/09/2023</Paragraph>
-                            <Paragraph>Total Task- 10</Paragraph>
-
-                            <Avatar.Group
-                                maxCount={4}
-                                size="large"
-                                maxStyle={{
-                                    color: '#f56a00',
-                                    backgroundColor: '#fde3cf',
-                                }}
-                            >
-                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#f56a00',
-                                    }}
-                                >
-                                    K
-                                </Avatar>
-                                <Tooltip title="Ant User" placement="top">
+                                    >
+                                        K
+                                    </Avatar>
                                     <Avatar
                                         style={{
-                                            backgroundColor: '#87d068',
+                                            backgroundColor: '#f56a00',
                                         }}
-                                        icon={<UserOutlined />}
+                                    >
+                                        K
+                                    </Avatar>
+                                    <Tooltip title="Ant User" placement="top">
+                                        <Avatar
+                                            style={{
+                                                backgroundColor: '#87d068',
+                                            }}
+                                            icon={<UserOutlined />}
+                                        />
+                                    </Tooltip>
+                                    <Avatar
+                                        style={{
+                                            backgroundColor: '#1677ff',
+                                        }}
+                                        icon={<AntDesignOutlined />}
                                     />
-                                </Tooltip>
-                                <Avatar
-                                    style={{
-                                        backgroundColor: '#1677ff',
-                                    }}
-                                    icon={<AntDesignOutlined />}
-                                />
-                            </Avatar.Group>
+                                </Avatar.Group>
 
-                        </Card>
-                    </Col>
+                            </Card>
+                        </Col>
+                    ))}
 
                 </Row>
             </div>,

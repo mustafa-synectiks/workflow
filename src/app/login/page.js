@@ -15,7 +15,7 @@ const Login = () => {
                         Manage your project and the team in easy way.
                     </p>
                 </div>
-                <form action="http://localhost:3000/main">
+                <form action="/main">
                     <div className="login w-96 h-72 flex flex-col justify-between">
                         <div className="login-bar w-96 h-11 bg-gray-100 p-2">
                             <h4 className="flex two gap-7 text-black no-underline items-center">
@@ -45,7 +45,7 @@ const Login = () => {
                             <a href="#" className="text-blue-500">
                                 Forgot your Password?
                             </a>
-                        </div> 
+                        </div>
                         <input
                             type="submit"
                             value="Sign In"

@@ -131,6 +131,7 @@ import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { Button, Modal } from 'antd';
 import { useState } from "react";
 import Projectmanager from "./popup/Addresources";
+import Link from "next/link";
 
 export default function Home() {
   const [isResourcPoolmodelOpen, setIsResourcPoolmodelOpen] = useState(false);
@@ -145,7 +146,7 @@ export default function Home() {
   };
   return (
     <>
-    <div className="main flex flex-col bg-white w-screen rounded-lg  ">
+    <div className="main flex flex-col bg-white w-full rounded-lg  ">
       <h2 className="ml-4 mt-5 text-black font-segoe-ui text-2xl font-semibold leading-24">Resource Pool</h2>
 
       <div className="flex mt-8">
@@ -245,8 +246,7 @@ export default function Home() {
         </div>
       </div>
       <div className="btn relative bg-white mb-10">
-        <a href="#">
-          <button className=" relative left-[1132px] top-6 flex  py-1  px-4 justify-center items-center   bg-blue-500 text-white bg-primary-6   ">Next</button></a>
+          <Link href='/main/projects/addedResources' className=" absolute right-0 top-0   py-1  px-4 bg-blue-500 text-white bg-primary-6   ">Next</Link>
       </div>
 
 

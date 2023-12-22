@@ -12,42 +12,48 @@
 
 // export default page
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
     PlusSquareFilled,
     DownOutlined,
 } from '@ant-design/icons';
 import { Space, Button, Card, Typography, Col, Row, Dropdown, message, } from 'antd';
+import axios from 'axios';
+
 
 const { Title, Paragraph, Text } = Typography;
+
+const getData = async () => {
+    try {
+        const response = await axios.get('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/project');
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+};
 const ProjectLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const [data, setData] = useState([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getData();
+            setData(result);
+        };
+        fetchData();
+    }, []);
     const toggleSider = () => {
         setCollapsed(!collapsed);
     };
-    const items = [
-        {
-            label: 'All Projects',
-            key: '1',
-        },
-        {
-            label: 'In Progress',
-            key: '1',
-        },
-        {
-            label: 'Completed',
-            key: '3',
-        },
 
-    ];
     const handleMenuClick = (e) => {
         message.info('Click on menu item.');
         console.log('click', e);
     };
     const menuProps = {
-        items,
+        // items,
         onClick: handleMenuClick,
     };
     return (
@@ -68,70 +74,23 @@ const ProjectLayout = () => {
                 </div>
                 <div className='my-5'>
                     <Row gutter={16}>
-                        <Col span={6}>
-                            <Card title="Project 1" headerFontSize={22} bordered={false} >
-                                <div className='flex flex-row justify-around items-center p-0'>
-                                    <Text className='text-xl'>Total Usecase</Text>
-                                    <Text>20</Text>
-                                </div>
-                                <div className='flex flex-row justify-around items-center my-4'>
-                                    <h4>Total Resources</h4>
-                                    <p>20</p>
-                                </div>
-                                <div className='flex flex-row justify-around items-center'>
-                                    <Button className='bg-green-300'>Completed</Button>
-                                    <Text></Text>
-                                </div>
-                            </Card>
-                        </Col>
-                        <Col span={6}>
-                            <Card title="Project 2" headerFontSize={22} bordered={false} >
-                                <div className='flex flex-row justify-around items-center'>
-                                    <Text className='text-xl'>Total Usecase</Text>
-                                    <Text>20</Text>
-                                </div>
-                                <div className='flex flex-row justify-around items-center my-4'>
-                                    <Text>Total Resources</Text>
-                                    <Text>20</Text>
-                                </div>
-                                <div className='flex flex-row justify-around items-center'>
-                                    <Button className='bg-orange-300'>In Progress</Button>
-                                    <Text></Text>
-                                </div>
-                            </Card>
-                        </Col>
-                        <Col span={6}>
-                            <Card title="Project 3" headerFontSize={22} bordered={false} >
-                                <div className='flex flex-row justify-around items-center'>
-                                    <Text className='text-xl'>Total Usecase</Text>
-                                    <Text>20</Text>
-                                </div>
-                                <div className='flex flex-row justify-around items-center my-4'>
-                                    <Text>Total Resources</Text>
-                                    <Text>20</Text>
-                                </div>
-                                <div className='flex flex-row justify-around items-center'>
-                                    <Button className='bg-green-300'>Completed</Button>
-                                    <Text></Text>
-                                </div>
-                            </Card>
-                        </Col>
-                        <Col span={6}>
-                            <Card title="Project 4" headerFontSize={22} bordered={false} >
-                                <div className='flex flex-row justify-around items-center'>
-                                    <Text className='text-xl'>Total Usecase</Text>
-                                    <Text>20</Text>
-                                </div>
-                                <div className='flex flex-row justify-around items-center my-4'>
-                                    <Text>Total Resources</Text>
-                                    <Text>20</Text>
-                                </div>
-                                <div className='flex flex-row justify-around items-center'>
-                                    <Button className='bg-orange-300'>In Progress</Button>
-                                    <Text></Text>
-                                </div>
-                            </Card>
-                        </Col>
+                        {data.map((item, index) => (
+                            <Col span={6}>
+                                <Card title={item.proejct_name} headerFontSize={22} bordered={false} >
+                                    <div className='flex flex-row justify-start items-center p-0'>
+                                        <Text className='text-xl'>Total Usecases {item.total_usecases}</Text>
+                                    </div>
+                                    <div className='flex flex-row justify-start items-center my-4'>
+                                        <h4>Total Resources {item.total_resources}</h4>
+                                    </div>
+                                    <div className='flex flex-row justify-start items-center'>
+                                        <Button className='bg-green-300'>{item.status}</Button>
+
+                                    </div>
+                                </Card>
+                            </Col>
+                        ))}
+
                     </Row>
                     <Row>
                         <Col span={6}>

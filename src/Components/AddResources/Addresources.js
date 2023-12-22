@@ -1,109 +1,203 @@
+"use client";
 
-const Projectmanager = () => {
+import { TbTriangleInvertedFilled } from "react-icons/tb";
+import { Button, Modal } from "antd";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "@/Context/slice";
+
+export default function Addresources() {
+  const [name, setName] = useState("");
+  const dispatch = useDispatch();
+  const userDispatch = () => {
+    dispatch(addUser(name));
+  };
+
+  const [isResourcPoolmodelOpen, setIsResourcPoolmodelOpen] = useState(false);
+  const showResourcPoolmodel = () => {
+    setIsResourcPoolmodelOpen(true);
+  };
+  const handleOk = () => {
+    setIsResourcPoolmodelOpen(false);
+  };
+  const handleCancel = () => {
+    setIsResourcPoolmodelOpen(false);
+  };
+
   return (
-    <div className='flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]'>
-      <div className='flex items-center justify-between'>
-        <h1 className='text-slate-700 text-xl non-italic font-semibold leading-none'>List Of Project Managers</h1>
-        <button className='flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white'>Add</button>
-      </div>
-      <div>
-        <input className='border border-gray-500 bg-white rounded w-64 h-9 pl-3' placeholder='Search'></input>
-      </div>
-      <div className='w-[100%] border border-gray-400 p-5 flex justify-center rounded'>
-        <div className='rounded-lg bg-white shadow-md w-[100%] border border-gray-200 border-t-0'>
-          <div className=' flex flex-col gap-5 mt-3 '>
-            <div className='text-black font-segoe-ui text-base font-semibold leading-normal flex items-center justify-start  px-16 pl-24 gap-60  '>
-              <h1>Name</h1>
-              <div className="flex w-[80%] justify-around pr-4 gap-24">
-              <h1 className=''>Last Active</h1>
-              <h1 className=' '>Role</h1>
-           
-              </div>
-              </div>
-            <div className='flex items-center justify-around'>
-              <div className='border border-gray-200 w-[95%] '></div>
+
+    <div className="main flex flex-col bg-white w-[1218px] rounded-lg  ">
+      <h2 className="ml-4 mt-5 text-black font-segoe-ui text-2xl font-semibold leading-24">
+        Resource Pool
+      </h2>
+
+      <div className="flex mt-8">
+        <div className="flex flex-col items-start ml-4 gap-14 justify-center">
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+            Project Manager
+          </h3>
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+            UI Designer
+          </h3>
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+            UI Developer
+          </h3>
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+            API Developer
+          </h3>
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+            Tester
+          </h3>
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+            UX Researcher
+          </h3>
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+            CI/CD
+          </h3>
+        </div>
+        <div className="div flex flex-col gap-4">
+          <div className=" flex flex-row">
+            <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+              <a
+                href="#"
+                className="flex justify-between items-center"
+                onClick={showResourcPoolmodel}
+              >
+                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                  Add Project Manager
+                </span>
+                <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+              </a>
+              <Modal
+                open={isResourcPoolmodelOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                width={1000}
+              >
+                <DisplayUsers />
+              </Modal>
+            </div>
+            <div className=" text-gray-300 rounded-md bg-neutral-1 shadow-md px-6 py-5">
+              <span>00</span>
             </div>
           </div>
-          <div>
-            <div className='flex items-center justify-start py-6 pr-20 pl-4 gap-40'>
-              <div className="flex items-center gap-6 pl-3">
-              <div><input type='checkbox'></input></div>
-                <div className='flex items-center gap-3'>
-                  <img className='rounded-full w-16 h-16' src='https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_1280.jpg'></img>
-                  <div>
-                    <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">Alex Ben</h1>
-                    <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">Alex.benn@gmail.com</h3>
-                  </div>
-              </div>
-                </div>
-              <div className="flex justify-between w-[52%] ">
-              <div className='text-sm non-italic font-normal leading-none text-blue-500'>Before 40 Min</div>
-                <div className='text-neutral-400 font-segoe-ui text-base font-normal'>Project Manager</div>
-              </div>
+          <div className=" flex flex-row">
+            <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+              <a
+                href="#"
+                className="flex justify-between items-center"
+                onClick={showResourcPoolmodel}
+              >
+                {" "}
+                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                  Add UI Designer
+                </span>
+                <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+              </a>
             </div>
-
-
-            <div className='flex items-center justify-between py-6 pr-20 pl-4 gap-12'>
-              <div className="flex items-center gap-6 pl-3">
-              <div><input type='checkbox'></input></div>
-                <div className='flex items-center gap-3'>
-                  <img className='rounded-full w-16 h-16' src='https://cdn.pixabay.com/photo/2018/03/01/14/57/portrait-3190849_1280.jpg'></img>
-                  <div>
-                    <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">Angela Moss</h1>
-                    <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">Angela.moss@gmail.com</h3>
-                  </div>
-              </div>
-                </div>
-              <div className="flex justify-between w-[46%]">
-              <div className='  text-sm non-italic font-normal leading-none text-blue-500 '>Online</div>
-                <div className='text-neutral-400 font-segoe-ui text-base font-normal'>Project Manager</div>
-              </div>
+            <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
+              <span>00</span>
             </div>
-
-
-            <div className='flex items-center justify-between py-6 pr-20 pl-4'>
-            <div className="flex items-center gap-6 pl-3">
-             <div><input type='checkbox'></input></div>
-                <div className='flex items-center gap-3'>
-                  <img className='rounded-full w-16 h-16' src='https://cdn.pixabay.com/photo/2016/11/29/03/36/woman-1867093_1280.jpg'></img>
-                  <div>
-                    <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">Della Samantha</h1>
-                    <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">Della.samatha@gmail.com</h3>
-                  </div>
-             </div>
-                </div>
-                <div className="flex justify-between w-[46%]">
-                <div className='text-sm non-italic font-normal leading-none text-blue-500 '>Just Now</div>
-                <div className='text-neutral-400 font-segoe-ui text-base font-normal'>Project Manager</div>
-                </div>
+          </div>
+          <div className=" flex flex-row">
+            <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+              <a
+                href="#"
+                className="flex justify-between items-center"
+                onClick={showResourcPoolmodel}
+              >
+                {" "}
+                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                  Add UI Developer
+                </span>
+                <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+              </a>
             </div>
-
-
-            <div className='flex items-center justify-between py-6 pr-20 pl-4'>
-              <div className="flex items-center gap-6 pl-3">
-              <div><input type='checkbox'></input></div>
-                <div className='flex items-center gap-3'>
-                  <img className='rounded-full w-16 h-16' src='https://cdn.pixabay.com/photo/2016/03/27/21/52/woman-1284411_1280.jpg'></img>
-                  <div>
-                    <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">Jenner</h1>
-                    <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">Jenner.01@gmail.com</h3>
-                  </div>
-              </div>
-                </div>
-               <div className="flex justify-between w-[46%]">
-               <div className='text-sm non-italic font-normal leading-none text-blue-500 '>22/11/2023</div>
-                <div className='text-neutral-400 font-segoe-ui text-base font-normal'>Project Manager</div>
-           
-               </div>
-                </div>
-            
-
+            <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
+              <span>00</span>
+            </div>
+          </div>
+          <div className=" flex flex-row">
+            <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+              <a
+                href="#"
+                className="flex justify-between items-center"
+                onClick={showResourcPoolmodel}
+              >
+                {" "}
+                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                  Add API Developer
+                </span>
+                <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+              </a>
+            </div>
+            <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
+              <span>00</span>
+            </div>
+          </div>
+          <div className=" flex flex-row">
+            <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+              <a
+                href="#"
+                className="flex justify-between items-center"
+                onClick={showResourcPoolmodel}
+              >
+                {" "}
+                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                  Add Tester
+                </span>
+                <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+              </a>
+            </div>
+            <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
+              <span>00</span>
+            </div>
+          </div>
+          <div className=" flex flex-row">
+            <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+              <a
+                href="#"
+                className="flex justify-between items-center"
+                onClick={showResourcPoolmodel}
+              >
+                {" "}
+                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                  Add UX Researcher
+                </span>
+                <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+              </a>
+            </div>
+            <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
+              <span>00</span>
+            </div>
+          </div>
+          <div className=" flex flex-row mb-5">
+            <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+              <a
+                href="#"
+                className="flex justify-between items-center"
+                onClick={showResourcPoolmodel}
+              >
+                {" "}
+                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                  Add CI/CD
+                </span>
+                <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+              </a>
+            </div>
+            <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
+              <span>00</span>
+            </div>
           </div>
         </div>
       </div>
+      <div className="btn relative bg-white mb-10">
+        <a href="#">
+          <Link href='/main/projects/addedResources' className=" relative left-[1132px] top-6 flex  py-1  px-4 justify-center items-center   bg-blue-500 text-white bg-primary-6   ">
+            Next
+          </Link>
+        </a>
+      </div>
     </div>
-  )
+  );
 }
-
-export default Projectmanager
-

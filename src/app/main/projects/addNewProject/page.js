@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 // import React, { useState } from 'react';
 // import Link from 'next/link';
 // import {
@@ -149,23 +149,51 @@
 //         </>
 //     );
 // }
+
+import React, { useState } from 'react';
 import Link from "next/link";
 import NavLink from "@/app/nav-link";
 import { Button } from "antd";
+import axios from 'axios';
 export default function ProjectForm() {
-    async function onSubmit(event) {
-        event.preventDefault();
-
-        const formData = new FormData(event.target);
-        const response = await fetch("/api/submit", {
-            method: "POST",
-            body: formData,
+    const [formData, setFormData] = useState({
+        projectName: '',
+        projectManager: '',
+        projectDescription: '',
+        projectDepartment: '',
+        startDate: '',
+        endDate: '',
+    });
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
         });
+    };
 
-        // Handle response if necessary
-        const data = await response.json();
-        // ...
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            // Make a POST request using Axios (replace the API endpoint)
+            const response = await axios.post('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/project', formData);
+
+            // Handle the response (you can log it or perform other actions)
+            console.log('Project added successfully:', response.data);
+
+            // Reset the form data
+            setFormData({
+                projectName: '',
+                projectManager: '',
+                projectDescription: '',
+                projectDepartment: '',
+                startDate: '',
+                endDate: '',
+            });
+        } catch (error) {
+            console.error('Error adding project:', error.message);
+        }
+    };
 
     return (
         <>
@@ -186,16 +214,17 @@ export default function ProjectForm() {
             </section>
             {/* Shows a Details of Project */}
             <section className="flex flex-col items-center flex-shrink-0 justify-between w-auto py-1 bg-white ">
-                <form className="flex flex-col px-6 py-5 items-center justify-center gap-3 ">
+                <form className="flex flex-col px-6 py-5 items-center justify-center gap-3 " onSubmit={handleSubmit}>
                     <div className="flex flex-row items-center justify-between">
                         <label
-                            className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6 }"
+                            className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
                             for="Project"
+
                         >
                             Project Name:
                         </label>
                         <input
-                            type="text"
+                            type="text" name="projectName" value={formData.projectName} onChange={handleChange}
                             id="name"
                             placeholder="Project name"
                             className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
@@ -210,28 +239,27 @@ export default function ProjectForm() {
                             Project Manager :
                         </label>
                         <input
-                            type="text"
+                            type="text" name="projectManager" value={formData.projectManager} onChange={handleChange}
                             id="name"
                             placeholder="Admin name"
                             className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
                         />
                     </div>
 
-                    <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-row items-baseline justify-between">
                         <label
                             className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
                             for="Project"
                         >
                             Project Description :
                         </label>
-                        <input
-                            type="text"
+                        <textarea name="projectDescription" value={formData.projectDescription} onChange={handleChange}
                             id="name"
                             placeholder="Description.."
-                            className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
+                            className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-28 w-96 m-1"
                         />
                     </div>
-                    <div className="flex flex-row items-center justify-between">
+                    {/* <div className="flex flex-row items-center justify-between">
                         <label
                             className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
                             for="Project"
@@ -244,7 +272,7 @@ export default function ProjectForm() {
                             placeholder="Please enter name"
                             className="text-slate-500 font-sans text-sm font-normal not-italic leading-6  self-stretch items-center flex-1 border  rounded-sm  border-slate-200 bg-slate-100 shadow px-1 py-1 h-20 w-96 m-1"
                         />
-                    </div>
+                    </div> */}
 
                     <div className="flex flex-row items-center justify-between">
                         <label
@@ -254,7 +282,7 @@ export default function ProjectForm() {
                             Project Department :
                         </label>
                         <input
-                            type="text"
+                            type="text" name="projectDepartment" value={formData.projectDepartment} onChange={handleChange}
                             id=" name"
                             placeholder=" Please describe your customer service, internal customers directly.."
                             className="text-slate-500 font-sans text-sm font-normal not-italic leading-6  self-stretch items-center flex-1 border  rounded-sm  border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
@@ -269,14 +297,13 @@ export default function ProjectForm() {
                             Project Duration :
                         </label>
                         <div>
-                            <input
-                                type="date"
+                            <input type="date" name="startDate" value={formData.startDate} onChange={handleChange}
                                 id="name"
                                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
                             />
                             <span>-</span>
                             <input
-                                type="date"
+                                type="date" name="endDate" value={formData.endDate} onChange={handleChange}
                                 id="name"
                                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
                             />
@@ -298,11 +325,12 @@ export default function ProjectForm() {
                     </div>
                 </form>
                 <Button
-                    onSubmit=""
+                    type="submit"
                     className="ml-[90%] m-10 px-1 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm w-16 h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
-                >
-                    <Link href="/main/projects/resourcePool">Next</Link>
+                >Save
                 </Button>
+                    <Link className='px-6 py-3 bg-blue-500'
+                    href="/main/projects/resourcePool">Next</Link>
             </section>
         </>
     );

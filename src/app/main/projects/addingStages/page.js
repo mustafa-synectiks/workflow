@@ -1,7 +1,7 @@
 "use client";
-import AddStage from "./../../../../../src/app/main/projects/addStages/ModalStages/AddStages";
-import AddCheckList from "./../../../../../src/app/main/projects/addStages/ModalStages/AddChecklist";
-import SubStages from "./../../../../../src/app/main/projects/addStages/ModalStages/AddSubStage";
+import AddStage from "./ModalStages/AddStages";
+import AddCheckList from "./ModalStages/AddChecklist";
+import SubStages from "./ModalStages/AddSubStage";
 import Image from "next/image";
 export default function ProjectStages() {
   return (
@@ -91,7 +91,7 @@ export default function ProjectStages() {
             </div>
             {/* left Conatiner Box  Stages */}
             <button
-              className="flex  px-1 py-4 justify-center items-center gap-2 
+              className="flex  px-1 py-4 justify-center items-center gap-2
              border rounded border-blue-700 bg-blue-500 hover-blue-700 w-16 h-8 m-5 ml-[85%]"
             >
               Save
